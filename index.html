@@ -1,15 +1,513 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>KS First Project</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Your Table</title>
+<script>
 
+
+const guests = [
+  // Table 01
+  ["Aishu Palaniyappan", 1],
+  ["Akila Vivek", 1],
+  ["Amru Palaniyappan", 1],
+  ["Arjun Vivek", 1],
+  ["Devi Arunachalam", 1],
+  ["Vijay Chetty", 1],
+  ["Ganesh Muthu", 1],
+  ["Shruthi Somasundaram", 1],
+  ["Hari Palaniyappan", 1],
+
+  // Table 02
+  ["Arjun Nagappan", 2],
+  ["Meenu Arjun", 2],
+  ["Arun Narayanan", 2],
+  ["Meyya Narayanan", 2],
+  ["Kavin & Shree Muthu", 2],
+  ["Meyya Muthu", 2],
+  ["Malar Vasanth", 2],
+  ["Siddarth Kannappan", 2],
+  ["Vasanth Swaminathan", 2],
+  ["Sathish Nagappan", 2],
+
+  // Table 03
+  ["Aadhav Ramu", 3],
+  ["Mena Ramu", 3],
+  ["Sivu Suppiah", 3],
+  ["Adarsh Balaji", 3],
+  ["Adhitya Suppiah", 3],
+  ["Keshav Sota", 3],
+  ["Nived Gopakumar", 3],
+  ["Ram Venkadesan", 3],
+  ["Sindhu Kannappan", 3],
+  ["Suman Shastry", 3],
+
+  // Table 04
+  ["Abhiram Tadepalli", 4],
+  ["Cindy Weng", 4],
+  ["Nandan Polisetty", 4],
+  ["Novonil Banik", 4],
+  ["Peggy Quon", 4],
+  ["Sharanya Agarwal", 4],
+  ["Shivi Bhatnagar", 4],
+  ["Simar Wadhwa", 4],
+  ["Spencer Hanus", 4],
+  ["Suraj Sunkara", 4],
+
+  // Table 05
+  ["Annam Vivek", 5],
+  ["Vivek Thiagarajan", 5],
+  ["Chitra Suppiah", 5],
+  ["Socka Suppiah", 5],
+  ["Meena Suppiah", 5],
+  ["Nachiappan Periyanan", 5],
+  ["Shanthi Nachiappan", 5],
+  ["Rama Letchuman", 5],
+  ["Shanthi Letchuman", 5],
+  ["AJ Letchuman", 5],
+  ["Valli Selvam", 5],
+
+  // Table 06
+  ["Annamalai Ramanathan", 6],
+  ["Meena Annamalai", 6],
+  ["Kannappan Sekkappan", 6],
+  ["Shanthi Kannappan", 6],
+  ["Latha Ganesh", 6],
+  ["Malathi Singaram", 6],
+  ["Singaram Thiagarajan", 6],
+  ["Nacha Muthu", 6],
+  ["Ravi Meyyappan", 6],
+  ["Nagappan Sekkappan", 6],
+
+  // Table 07
+  ["Abay Radhakrishnan", 7],
+  ["Lata Abaynathan", 7],
+  ["Bhavin Doshi", 7],
+  ["Lakshmi Jagad", 7],
+  ["Pratik Jagad", 7],
+  ["Nilesh Mehta", 7],
+  ["Pooja Mehta", 7],
+  ["Pranav Sathyan", 7],
+  ["Preeti Sathyan", 7],
+  ["Sathyan Parthasarathy", 7],
+
+  // Table 08
+  ["Ajay Kalaskar", 8],
+  ["Vaishali Kalaskar", 8],
+  ["Apoorva Chintala", 8],
+  ["Sai Kalyan Chintala", 8],
+  ["Meena Nandakumar", 8],
+  ["Nandu Vaidyanathan", 8],
+  ["Naresh Chalimeda", 8],
+  ["Rama Shreedharan", 8],
+  ["Sriram Iyer", 8],
+
+  // Table 09
+  ["Anu Shanmugam", 9],
+  ["Shanmugam Palaniappan", 9],
+  ["Lakshmi Swarnam", 9],
+  ["Mani Swarnam", 9],
+  ["Tharun Swarnam", 9],
+  ["Ram Ramanathan", 9],
+  ["Viji Ramanathan", 9],
+  ["Sathu Sundaram", 9],
+  ["Solai Sundaram", 9],
+
+  // Table 10
+  ["Amutha Sethu", 10],
+  ["Ashok Sethu", 10],
+  ["Arulmozhi Thinnappan", 10],
+  ["Kumar Narayanan", 10],
+  ["Valli Narayanan", 10],
+  ["Pari Annamalai", 10],
+  ["Thaen Pari", 10],
+  ["Rajan Narayanan", 10],
+  ["Thenu Rajan", 10],
+
+  // Table 11
+  ["Aneeta Thandi", 11],
+  ["TD Srinivasan", 11],
+  ["Chandra Sekar", 11],
+  ["Indira Sekar", 11],
+  ["Murugan TSR", 11],
+  ["Veni Murugan", 11],
+  ["Swaminath Rajagopalan", 11],
+  ["Viji Swaminath", 11],
+
+  // Table 12
+  ["Chidamabaram N", 12],
+  ["Illakkuvan Palaniappan", 12],
+  ["Meena Illakkuvan", 12],
+  ["Harini Nachiappan", 12],
+  ["Janani Nachiappan", 12],
+  ["Nachiappan Narayanan", 12],
+  ["Sivagami Nachiappan", 12],
+  ["Manikandan Ramakrishnan", 12],
+  ["Nachammai Achi", 12],
+  ["Sundar Chockalingam", 12],
+
+  // Table 13
+  ["Anil Devan", 13],
+  ["Dhriti Devan", 13],
+  ["Supriya Rao", 13],
+  ["Dipa Jani", 13],
+  ["Karthik Jani", 13],
+  ["Gaurav Taneja", 13],
+  ["Sareena Nagpal", 13],
+  ["Jagir Pipalia", 13],
+  ["Kritika Nagpal", 13],
+  ["Neelam Rahtekar", 13],
+  ["Venkatesh Velugubantla", 13],
+
+  // Table 14
+  ["Alok Mathur", 14],
+  ["Nichelle Mathur", 14],
+  ["Celia Steigerwald", 14],
+  ["Deepak Raghavan", 14],
+  ["Priya Deepak", 14],
+  ["Lee Flemm", 14],
+  ["Sahil Khanna", 14],
+  ["Tina Multani", 14],
+  ["Ayden Khanna", 14],
+
+  // Table 15
+  ["Alamelu Veerappan", 15],
+  ["Veerappan Venkatachalam", 15],
+  ["Devi Soundar", 15],
+  ["Soundar Natarajan", 15],
+  ["Laxmi Veerappan", 15],
+  ["Veerappan Sadayappan", 15],
+  ["Raja Chetty", 15],
+  ["Sundari Chetty", 15],
+  ["Solai Chidamabaram", 15],
+
+  // Table 16
+  ["Arun Ramanathan", 16],
+  ["Muthu Ramu", 16],
+  ["Ramu Arunachalam", 16],
+  ["Arun Vaithi", 16],
+  ["Nacha Arun", 16],
+  ["Muthiah Subraminian", 16],
+  ["Subbu Muthiah", 16],
+  ["Siva Panchanatham", 16],
+
+  // Table 17
+  ["Aruna Kari", 17],
+  ["Ravi Kari", 17],
+  ["Bhavani Suresh", 17],
+  ["Suresh Krishnamoorthi", 17],
+  ["Perumal Annamalai", 17],
+  ["Ponni Swaminathan", 17],
+  ["Swaminathan S.A", 17],
+
+  // Table 18
+  ["PG Naik", 18],
+  ["Suvarna Naik", 18],
+  ["Prabhakar Patil", 18],
+  ["Smita Patil", 18],
+  ["Sandra Kraemer", 18],
+  ["William Boozer", 18],
+  ["Vinod Rajagopalan", 18]
+];
+
+
+function normalize(s) {
+  return s.toLowerCase().trim().replace(/\s+/g, " ");
+}
+
+function editDistance(a, b) {
+  const dp = Array.from({length: a.length + 1}, () => Array(b.length + 1).fill(0));
+  for (let i = 0; i <= a.length; i++) dp[i][0] = i;
+  for (let j = 0; j <= b.length; j++) dp[0][j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      dp[i][j] = Math.min(
+        dp[i-1][j] + 1,
+        dp[i][j-1] + 1,
+        dp[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1)
+      );
+    }
+  }
+  return dp[a.length][b.length];
+}
+
+function matchScore(query, name) {
+  const q = normalize(query);
+  const n = normalize(name);
+  if (n === q) return 100;
+  if (n.includes(q)) return 85;
+  const qWords = q.split(" ");
+  const nWords = n.split(" ");
+  let score = 0;
+  for (const qw of qWords) {
+    let best = 0;
+    for (const nw of nWords) {
+      const d = editDistance(qw, nw);
+      const maxLen = Math.max(qw.length, nw.length);
+      const similarity = maxLen ? 1 - d / maxLen : 0;
+      best = Math.max(best, similarity);
+    }
+    score += best;
+  }
+  return score / qWords.length * 80;
+}
+
+function showTable(guest) {
+  document.getElementById("result").innerHTML = `
+    <div class="welcome">
+      Welcome, ${guest[0]}!
+      <div class="table-label">Your table is</div>
+      <div class="table-number">${guest[1]}</div>
+    </div>`;
+}
+
+function findTable() {
+  const input = document.getElementById("nameInput").value;
+  const result = document.getElementById("result");
+  const q = normalize(input);
+
+  if (!q) {
+    result.innerHTML = '<div class="error">Please enter your name.</div>';
+    return;
+  }
+
+  const ranked = guests
+    .map(g => ({ guest: g, score: matchScore(q, g[0]) }))
+    .filter(x => x.score >= 52)
+    .sort((a, b) => b.score - a.score);
+
+  if (!ranked.length) {
+    result.innerHTML = `
+      <div class="error">
+        We couldn't find a match.<br>
+        Please check the spelling and try again.
+      </div>`;
+    return;
+  }
+
+  // Exact or very strong unique match: show table immediately.
+  if (ranked[0].score >= 99 || (ranked[0].score >= 84 && (ranked.length === 1 || ranked[0].score - ranked[1].score >= 12))) {
+    showTable(ranked[0].guest);
+    return;
+  }
+
+  // Otherwise let the guest choose from suggested names.
+  const suggestions = ranked.slice(0, 5);
+  result.innerHTML = `
+    <div style="width:100%">
+      <div class="suggest-title">Did you mean?</div>
+      <div class="suggestions">
+        ${suggestions.map((x, i) => `
+          <button class="suggestion" onclick="showTable(guests[${guests.indexOf(x.guest)}])">
+            ${x.guest[0]}
+          </button>
+        `).join("")}
+      </div>
+    </div>`;
+}
+
+
+</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&display=swap');
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f7f3eb;
+    color: #394238;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    padding: 24px;
+  }
+
+  .card {
+    width: min(92vw, 520px);
+    min-height: 620px;
+    position: relative;
+    background: #fcfaf5;
+    border: 1px solid #aab69f;
+    padding: 70px 38px 55px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(70, 80, 60, 0.08);
+    overflow: hidden;
+  }
+
+  .leaf {
+    position: absolute;
+    font-size: 64px;
+    color: #9daa91;
+    opacity: .55;
+    line-height: 1;
+  }
+  .leaf.top-left { top: 10px; left: 12px; transform: rotate(-25deg); }
+  .leaf.bottom-right { bottom: 8px; right: 12px; transform: rotate(155deg); }
+
+  h1 {
+    margin: 0 0 8px;
+    font-family: "Great Vibes", "Brush Script MT", cursive;
+    font-size: clamp(48px, 12vw, 66px);
+    font-weight: 400;
+    color: #596650;
+  }
+
+  .subtitle {
+    font-size: 21px;
+    margin: 0 0 36px;
+    color: #626a5c;
+  }
+
+  .search-row {
+    display: flex;
+    gap: 10px;
+    margin: 0 auto;
+    max-width: 410px;
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    padding: 15px 16px;
+    border: 1px solid #b7c0ae;
+    background: white;
+    font: 20px "Cormorant Garamond", Georgia, serif;
+    color: #394238;
+    outline: none;
+  }
+
+  input:focus {
+    border-color: #7d8d70;
+    box-shadow: 0 0 0 2px rgba(125,141,112,.12);
+  }
+
+  button {
+    padding: 0 20px;
+    border: 1px solid #78866d;
+    background: #78866d;
+    color: white;
+    font: 18px "Cormorant Garamond", Georgia, serif;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  button:hover { background: #68765e; }
+
+  #result {
+    min-height: 170px;
+    margin-top: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .welcome {
+    font-size: 23px;
+    line-height: 1.45;
+  }
+
+  .table-label {
+    font-size: 21px;
+    margin-bottom: 2px;
+    color: #68715f;
+  }
+
+  .table-number {
+    font-family: Georgia, serif;
+    font-size: 92px;
+    line-height: .95;
+    font-weight: 500;
+    color: #536149;
+  }
+
+  .names {
+    margin-top: 12px;
+    font-size: 19px;
+    line-height: 1.4;
+  }
+
+  .error {
+    font-size: 21px;
+    color: #6d6259;
+    line-height: 1.45;
+  }
+
+  .hint {
+    margin-top: 30px;
+    font-size: 16px;
+    color: #7b8175;
+  }
+
+
+  .suggest-title {
+    font-size: 21px;
+    color: #68715f;
+    margin-bottom: 14px;
+  }
+
+  .suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    max-width: 410px;
+    margin: 0 auto;
+  }
+
+  button.suggestion {
+    width: 100%;
+    padding: 12px 16px;
+    background: #f5f2ea;
+    color: #4e5948;
+    border: 1px solid #b7c0ae;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  button.suggestion:hover {
+    background: #e9eee3;
+    color: #4e5948;
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 62px 22px 45px; min-height: 590px; }
+    .search-row { flex-direction: column; }
+    button { padding: 12px; }
+  }
+</style>
 </head>
-
 <body>
+  <main class="card">
+    <div class="leaf top-left">❧</div>
+    <div class="leaf bottom-right">❧</div>
 
-  <h1>Welcome to my world</h1>
+    <h1>Find Your Table</h1>
+    <p class="subtitle">Please enter your name below</p>
 
+    <div class="search-row">
+      <input id="nameInput" type="text" placeholder="Enter your name" autocomplete="off">
+      <button onclick="findTable()">Find My Table</button>
+    </div>
+
+    <div id="result">
+      <div class="hint">For example: Arjun Vivek</div>
+    </div>
+  </main>
+
+<script>
+  
+
+
+document.getElementById("nameInput").addEventListener("input", function() {
+  // No automatic search while typing; the guest presses the button.
+});
+
+document.getElementById("nameInput").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") findTable();
+});
+</script>
 </body>
-
 </html>
